@@ -48,7 +48,7 @@ public class TaskController {
     }
 
     @PatchMapping("/api/tasks/{taskId}/status")
-    public TaskDTO updateStatus(Principal principal, @PathVariable Long taskId, @Valid @RequestBody TaskDTO dto) {
+    public TaskDTO updateStatus(Principal principal, @PathVariable Long taskId, @RequestBody TaskDTO dto) {
         User currentUser = userService.findByUsername(principal.getName());
         return taskService.updateStatus(currentUser, taskId, dto);
     }

@@ -8,7 +8,7 @@ import { getProject } from '../services/projectService'
 import { createTask, getTasksByProject, updateTaskStatus } from '../services/taskService'
 
 export default function ProjectDetail() {
-  const { token } = useAuth()
+  const { token, user } = useAuth()
   const { id } = useParams()
   const [project, setProject] = useState(null)
   const [tasks, setTasks] = useState([])
@@ -46,12 +46,14 @@ export default function ProjectDetail() {
     return <div className="container">Projekt wird geladen...</div>
   }
 
+  const canManageMembers = user?.role === 'PROJEKTLEITER' || user?.role === 'ADMIN'
+
   return (
     <div className="container stack">
       <h2>{project.name}</h2>
       <p>{project.description}</p>
       <p>Fortschritt: {project.progress}%</p>
-      <Link to={`/projects/${project.id}/members`}>Mitglieder verwalten</Link>
+      {canManageMembers && <Link to={`/projects/${project.id}/members`}>Mitglieder verwalten</Link>}
       {error && <p className="error">{error}</p>}
       <TaskForm onSubmit={handleCreateTask} />
       <TaskList tasks={tasks} onStatusChange={handleStatusChange} />
