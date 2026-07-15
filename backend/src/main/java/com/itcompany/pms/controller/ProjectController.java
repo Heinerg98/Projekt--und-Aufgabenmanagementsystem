@@ -6,6 +6,7 @@ import com.itcompany.pms.entity.User;
 import com.itcompany.pms.service.ProjectService;
 import com.itcompany.pms.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -37,6 +38,7 @@ public class ProjectController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ProjectDTO create(Principal principal, @Valid @RequestBody ProjectDTO dto) {
         User currentUser = userService.findByUsername(principal.getName());
         return projectService.create(currentUser, dto);
