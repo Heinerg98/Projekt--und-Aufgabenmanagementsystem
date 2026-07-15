@@ -16,9 +16,9 @@ mvn spring-boot:run
 
 API läuft auf `http://localhost:8080`.
 
-Die Anwendungsdaten werden persistent in einer H2-Datei gespeichert. Beim ersten Start werden Demo-Daten automatisch angelegt. Wenn du die Datenbank zurücksetzen willst, lösche die erzeugten Dateien im Verzeichnis `backend/data/` (bei Start aus dem Backend-Ordner).
+Die Anwendungsdaten werden persistent in einer H2-Datei gespeichert. Beim ersten Start werden Demo-Daten automatisch angelegt. Wenn du den Backend-Server wie unten gezeigt aus `/home/runner/work/Projekt--und-Aufgabenmanagementsystem/Projekt--und-Aufgabenmanagementsystem/backend` startest, liegen die erzeugten Datenbankdateien unter `/home/runner/work/Projekt--und-Aufgabenmanagementsystem/Projekt--und-Aufgabenmanagementsystem/backend/data/`. Zum Zurücksetzen kannst du diese Dateien löschen.
 
-### Demo-Logins
+### Demo-Zugangsdaten
 
 - `admin / admin123` (ADMIN)
 - `leiter1 / leiter123` (PROJEKTLEITER)
