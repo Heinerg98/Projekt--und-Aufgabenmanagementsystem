@@ -1,0 +1,45 @@
+package com.itcompany.pms.controller;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+class AuthAndProjectIntegrationTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Test
+    void loginAndListProjectsWithTokenWorks() throws Exception {
+        String loginResponse = mockMvc.perform(post("/api/auth/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"username\":\"admin\",\"password\":\"admin123\"}"))
+            .andExpect(status().isOk())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+
+        JsonNode json = objectMapper.readTree(loginResponse);
+        String token = json.get("token").asText();
+
+        mockMvc.perform(get("/api/projects")
+                .header("X-Auth-Token", token))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$[0].name").value("Kundenportal"));
+    }
+}
