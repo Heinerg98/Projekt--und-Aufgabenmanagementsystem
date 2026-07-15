@@ -1,10 +1,10 @@
 INSERT INTO users (id, username, password, email, role, active) VALUES
   (1, 'admin', '{bcrypt}$2b$10$FzoeJp6afd4HMt7kqcPB0ubz6i7cigsT6onzVewP/SaLkaqrc1Fs.', 'admin@itcompany.com', 'ADMIN', true),
-  (2, 'leiter1', '{bcrypt}$2b$10$FQ6OAhSspSd6.lxUExEid.6uFv99bFHfxqTV4EUZG.dy9dpYJNHBC', 'leiter1@itcompany.com', 'PROJEKTLEITER', true),
-  (3, 'leiter2', '{bcrypt}$2b$10$FQ6OAhSspSd6.lxUExEid.6uFv99bFHfxqTV4EUZG.dy9dpYJNHBC', 'leiter2@itcompany.com', 'PROJEKTLEITER', true),
-  (4, 'mitarbeiter1', '{bcrypt}$2b$10$LnEcywA08huZhRSs0BQJBOXA56O9R.9zkG.sOnXZaIdNS91q27hdu', 'mit1@itcompany.com', 'MITARBEITER', true),
-  (5, 'mitarbeiter2', '{bcrypt}$2b$10$LnEcywA08huZhRSs0BQJBOXA56O9R.9zkG.sOnXZaIdNS91q27hdu', 'mit2@itcompany.com', 'MITARBEITER', true),
-  (6, 'mitarbeiter3', '{bcrypt}$2b$10$LnEcywA08huZhRSs0BQJBOXA56O9R.9zkG.sOnXZaIdNS91q27hdu', 'mit3@itcompany.com', 'MITARBEITER', true);
+  (2, 'leiter1', '{bcrypt}$2b$10$uhn6jnppWXXILKRziUIfJ.Hfs6yO44I9lphbKpKkp4l3aes0w0Fv6', 'leiter1@itcompany.com', 'PROJEKTLEITER', true),
+  (3, 'leiter2', '{bcrypt}$2b$10$jK3Id6MZvbDdteHr92pLzu.wLND8WtICPDLSV0FotQ6QIlYNfbwpK', 'leiter2@itcompany.com', 'PROJEKTLEITER', true),
+  (4, 'mitarbeiter1', '{bcrypt}$2b$10$oarIunYEXW/bH3qPFDBrQ.IZe4oh9fnq4HjdcV8Aysn9fH7tpdKGO', 'mit1@itcompany.com', 'MITARBEITER', true),
+  (5, 'mitarbeiter2', '{bcrypt}$2b$10$YgMBH4z1WKdis6uDIKJ2HeQQQWifQaeRB1HKwxVHXrRByxQTsmFUy', 'mit2@itcompany.com', 'MITARBEITER', true),
+  (6, 'mitarbeiter3', '{bcrypt}$2b$10$8dW1asG.FKCn0zzn4uvnoeOB1GCz5wjPwvpsoel54TaCsXZ6HS2Yy', 'mit3@itcompany.com', 'MITARBEITER', true);
 
 INSERT INTO projects (id, name, description, project_manager_id, status, created_at, updated_at) VALUES
   (1, 'Website Redesign', 'Modernisierung der Unternehmenswebsite', 2, 'AKTIV', CURRENT_TIMESTAMP(), CURRENT_TIMESTAMP()),

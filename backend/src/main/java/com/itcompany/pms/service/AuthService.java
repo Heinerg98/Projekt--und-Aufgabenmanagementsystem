@@ -64,6 +64,13 @@ public class AuthService {
         return userRepository.findById(sessionToken.userId());
     }
 
+    public void expireTokenForTest(String token) {
+        SessionToken sessionToken = tokens.get(token);
+        if (sessionToken != null) {
+            tokens.put(token, new SessionToken(sessionToken.userId(), Instant.now().minusSeconds(1)));
+        }
+    }
+
     private record SessionToken(Long userId, Instant expiresAt) {
     }
 }

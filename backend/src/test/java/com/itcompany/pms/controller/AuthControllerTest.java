@@ -4,13 +4,7 @@ import com.itcompany.pms.service.AuthService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.util.ReflectionTestUtils;
 
-import java.lang.reflect.Constructor;
-import java.time.Instant;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -68,19 +62,7 @@ class AuthControllerTest extends AbstractIntegrationTest {
     @Test
     void accessWithExpiredTokenReturnsUnauthorized() throws Exception {
         String token = loginAndGetToken("admin", "admin123");
-
-        @SuppressWarnings("unchecked")
-        Map<String, Object> tokens = (Map<String, Object>) ReflectionTestUtils.getField(authService, "tokens");
-        assertThat(tokens).isNotNull();
-
-        Object sessionToken = tokens.get(token);
-        assertThat(sessionToken).isNotNull();
-
-        Long userId = (Long) ReflectionTestUtils.invokeMethod(sessionToken, "userId");
-        Constructor<?> constructor = sessionToken.getClass().getDeclaredConstructor(Long.class, Instant.class);
-        constructor.setAccessible(true);
-        Object expiredToken = constructor.newInstance(userId, Instant.now().minusSeconds(30));
-        tokens.put(token, expiredToken);
+        authService.expireTokenForTest(token);
 
         mockMvc.perform(get("/api/projects")
                 .header("X-Auth-Token", token))
