@@ -8,11 +8,17 @@ export default function CreateProject() {
   const navigate = useNavigate()
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
+  const [error, setError] = useState('')
 
   const submit = async (e) => {
     e.preventDefault()
-    const project = await createProject(token, { name, description })
-    navigate(`/projects/${project.id}`)
+    try {
+      setError('')
+      const project = await createProject(token, { name, description })
+      navigate(`/projects/${project.id}`)
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   return (
@@ -23,6 +29,7 @@ export default function CreateProject() {
         <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Beschreibung" />
         <button type="submit">Anlegen</button>
       </form>
+      {error && <p className="error">{error}</p>}
     </div>
   )
 }

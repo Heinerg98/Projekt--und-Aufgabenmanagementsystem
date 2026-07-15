@@ -118,7 +118,12 @@ public class ProjectService {
     private Project getProjectForManager(User currentUser, Long projectId) {
         Project project = projectRepository.findById(projectId)
             .orElseThrow(() -> new NotFoundException("Projekt nicht gefunden"));
-        if (!project.getProjectManager().getId().equals(currentUser.getId()) || currentUser.getRole() != Role.PROJEKTLEITER) {
+
+        if (currentUser.getRole() == Role.ADMIN) {
+            return project;
+        }
+
+        if (!project.getProjectManager().getId().equals(currentUser.getId())) {
             throw new UnauthorizedException("Nur zuständiger Projektleiter erlaubt");
         }
         return project;

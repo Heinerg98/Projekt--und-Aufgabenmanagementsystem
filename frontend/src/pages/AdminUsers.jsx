@@ -6,14 +6,21 @@ import { createUser, getUsers } from '../services/userService'
 export default function AdminUsers() {
   const { token } = useAuth()
   const [users, setUsers] = useState([])
+  const [error, setError] = useState('')
 
   const load = async () => {
-    const data = await getUsers(token)
-    setUsers(data)
+    try {
+      setError('')
+      const data = await getUsers(token)
+      setUsers(data)
+    } catch (e) {
+      setUsers([])
+      setError(e.message)
+    }
   }
 
   useEffect(() => {
-    load().catch(() => setUsers([]))
+    load()
   }, [token])
 
   const handleCreate = async (payload) => {
@@ -25,6 +32,7 @@ export default function AdminUsers() {
     <div className="container stack">
       <h2>Benutzerverwaltung</h2>
       <UserForm onSubmit={handleCreate} />
+      {error && <p className="error">{error}</p>}
       {users.map((user) => (
         <div key={user.id} className="card">
           {user.username} - {user.role} - {user.email}

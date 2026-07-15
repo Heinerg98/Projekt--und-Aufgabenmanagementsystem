@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { addMember, getMembers } from '../services/projectService'
@@ -8,21 +8,33 @@ export default function ManageMembers() {
   const { id } = useParams()
   const [members, setMembers] = useState([])
   const [userId, setUserId] = useState('')
+  const [error, setError] = useState('')
 
-  const load = async () => {
-    const data = await getMembers(token, id)
-    setMembers(data)
-  }
+  const load = useCallback(async () => {
+    try {
+      setError('')
+      const data = await getMembers(token, id)
+      setMembers(data)
+    } catch {
+      setMembers([])
+      setError('Mitglieder konnten nicht geladen werden.')
+    }
+  }, [id, token])
 
   useEffect(() => {
-    load().catch(() => setMembers([]))
-  }, [id, token])
+    load()
+  }, [load])
 
   const submit = async (e) => {
     e.preventDefault()
-    await addMember(token, id, Number(userId))
-    setUserId('')
-    await load()
+    try {
+      setError('')
+      await addMember(token, id, Number(userId))
+      setUserId('')
+      await load()
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   return (
@@ -32,6 +44,7 @@ export default function ManageMembers() {
         <input value={userId} onChange={(e) => setUserId(e.target.value)} type="number" min="1" placeholder="User-ID" required />
         <button type="submit">Hinzufügen</button>
       </form>
+      {error && <p className="error">{error}</p>}
       {members.map((member) => (
         <div key={member.id} className="card">{member.username} ({member.role})</div>
       ))}

@@ -16,6 +16,12 @@ export async function apiRequest(path, options = {}, token) {
   })
 
   if (!response.ok) {
+    const contentType = response.headers.get('content-type') || ''
+    if (contentType.includes('application/json')) {
+      const json = await response.json()
+      throw new Error(json.error || 'Request fehlgeschlagen')
+    }
+
     const body = await response.text()
     throw new Error(body || 'Request fehlgeschlagen')
   }

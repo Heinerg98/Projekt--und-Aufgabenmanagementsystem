@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import TaskForm from '../components/TaskForm'
 import TaskList from '../components/TaskList'
@@ -11,19 +12,25 @@ export default function ProjectDetail() {
   const { id } = useParams()
   const [project, setProject] = useState(null)
   const [tasks, setTasks] = useState([])
+  const [error, setError] = useState('')
 
-  const load = async () => {
-    const [projectData, taskData] = await Promise.all([
-      getProject(token, id),
-      getTasksByProject(token, id)
-    ])
-    setProject(projectData)
-    setTasks(taskData)
-  }
+  const load = useCallback(async () => {
+    try {
+      setError('')
+      const [projectData, taskData] = await Promise.all([
+        getProject(token, id),
+        getTasksByProject(token, id)
+      ])
+      setProject(projectData)
+      setTasks(taskData)
+    } catch {
+      setError('Projektdaten konnten nicht geladen werden.')
+    }
+  }, [id, token])
 
   useEffect(() => {
-    load().catch(() => {})
-  }, [id, token])
+    load()
+  }, [load])
 
   const handleCreateTask = async (payload) => {
     await createTask(token, id, payload)
@@ -44,6 +51,8 @@ export default function ProjectDetail() {
       <h2>{project.name}</h2>
       <p>{project.description}</p>
       <p>Fortschritt: {project.progress}%</p>
+      <Link to={`/projects/${project.id}/members`}>Mitglieder verwalten</Link>
+      {error && <p className="error">{error}</p>}
       <TaskForm onSubmit={handleCreateTask} />
       <TaskList tasks={tasks} onStatusChange={handleStatusChange} />
     </div>
