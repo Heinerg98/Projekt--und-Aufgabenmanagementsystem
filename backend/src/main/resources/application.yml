@@ -1,6 +1,10 @@
 spring:
   datasource:
+<<<<<<< HEAD
     url: jdbc:h2:mem:pms;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+=======
+    url: jdbc:h2:mem:pmsdb
+>>>>>>> origin/main
     driver-class-name: org.h2.Driver
     username: sa
     password:
@@ -8,9 +12,20 @@ spring:
     hibernate:
       ddl-auto: create-drop
     defer-datasource-initialization: true
+<<<<<<< HEAD
   h2:
     console:
       enabled: true
 
 auth:
   token-ttl-seconds: 3600
+=======
+    show-sql: false
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+server:
+  port: 8080
+>>>>>>> origin/main

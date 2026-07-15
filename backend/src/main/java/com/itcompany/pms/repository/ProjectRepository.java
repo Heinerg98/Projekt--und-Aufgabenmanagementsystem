@@ -7,5 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
+<<<<<<< HEAD
     List<Project> findByProjectLead(User lead);
+=======
+    List<Project> findByProjectManager(User projectManager);
+>>>>>>> origin/main
 }
