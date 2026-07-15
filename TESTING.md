@@ -13,7 +13,7 @@
   - Sichtbarkeit nach Rolle (ADMIN / PROJEKTLEITER / MITARBEITER)
   - Archivierung RBAC
   - Fortschrittsberechnung (`totalTasks`, `completedTasks`, `progress`)
-- `TaskControllerTest` (6 Tests)
+- `TaskControllerTest` (7 Tests)
   - Task-Erstellung RBAC
   - Statuswechsel `OFFEN -> IN_BEARBEITUNG -> ERLEDIGT`
   - Task-Projektzuordnung
@@ -30,7 +30,7 @@
   - Doppelter Username
   - Ungültiges E-Mail-Format
 
-**Gesamt:** 31 Integrationstests im Backend.
+**Gesamt:** 32 Integrationstests im Backend.
 
 ## ✅ Test-Ergebnisse
 
@@ -39,7 +39,7 @@ Ausgeführt:
 cd backend && mvn test
 ```
 Ergebnis:
-- Tests run: **31**
+- Tests run: **32**
 - Failures: **0**
 - Errors: **0**
 - Skipped: **0**
@@ -47,21 +47,27 @@ Ergebnis:
 
 Zusätzliche Validierung:
 ```bash
-cd frontend && npm run build
+cd frontend && npm install && npm run build
 ```
 Ergebnis:
 - Frontend-Build erfolgreich
+
+## 💾 Persistenz
+
+- Die Anwendung verwendet im Normalbetrieb eine **persistente dateibasierte H2-Datenbank** (`jdbc:h2:file:./data/pmsdb`).
+- Beim ersten Start werden Demo-Daten automatisch angelegt.
+- Die Integrationstests nutzen weiterhin eine **isolierte In-Memory-H2-Datenbank** mit Testdaten aus `backend/src/test/resources/test-data.sql`.
 
 ## 🔐 Sicherheits-Checkliste
 
 - [x] Passwort-Hashing mit BCrypt (`PasswordEncoder` in `SecurityConfig`)
 - [x] Login verifiziert Passwort über `passwordEncoder.matches(...)` in `AuthService`
 - [x] `UserService` hasht Passwörter bei Create/Update
-- [x] `data.sql` enthält BCrypt-gehashte Test-Passwörter (`{bcrypt}...`)
+- [x] `test-data.sql` enthält BCrypt-gehashte Test-Passwörter (`{bcrypt}...`)
 - [x] Unautorisierter Zugriff ohne/ungültigen/abgelaufenen Token liefert HTTP 401
 - [x] RBAC-Fälle (ADMIN / PROJEKTLEITER / MITARBEITER) durch Integrationstests abgesichert
 
-## 📊 Testdaten-Übersicht (H2 `data.sql`)
+## 📊 Testdaten-Übersicht (Testprofil H2 `test-data.sql`)
 
 - **User:** 6 (`admin`, `leiter1`, `leiter2`, `mitarbeiter1`, `mitarbeiter2`, `mitarbeiter3`)
 - **Projekte:** 4 (davon 3 aktiv, 1 archiviert)
