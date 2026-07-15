@@ -5,6 +5,7 @@ import com.itcompany.pms.entity.User;
 import com.itcompany.pms.service.TaskService;
 import com.itcompany.pms.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -28,6 +29,7 @@ public class TaskController {
     }
 
     @PostMapping("/api/projects/{projectId}/tasks")
+    @ResponseStatus(HttpStatus.CREATED)
     public TaskDTO create(Principal principal, @PathVariable Long projectId, @Valid @RequestBody TaskDTO dto) {
         User currentUser = userService.findByUsername(principal.getName());
         return taskService.create(currentUser, projectId, dto);

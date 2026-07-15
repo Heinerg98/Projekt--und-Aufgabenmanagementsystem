@@ -2,11 +2,14 @@ package com.itcompany.pms.controller;
 
 import com.itcompany.pms.dto.AuthRequest;
 import com.itcompany.pms.dto.AuthResponse;
+import com.itcompany.pms.exception.UnauthorizedException;
 import com.itcompany.pms.service.AuthService;
 import com.itcompany.pms.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -22,7 +25,11 @@ public class AuthController {
 
     @PostMapping("/login")
     public AuthResponse login(@Valid @RequestBody AuthRequest request) {
-        return authService.login(request.getUsername(), request.getPassword());
+        try {
+            return authService.login(request.getUsername(), request.getPassword());
+        } catch (UnauthorizedException ex) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ex.getMessage());
+        }
     }
 
     @PostMapping("/logout")
