@@ -110,4 +110,27 @@ class TaskControllerTest extends AbstractIntegrationTest {
                 .content("{\"title\":\"\",\"status\":null}"))
             .andExpect(status().isBadRequest());
     }
+
+    @Test
+    void patchStatusWithStatusOnlyPayloadSucceeds() throws Exception {
+        String token = loginAndGetToken("mitarbeiter1", "mit123");
+
+        String response = mockMvc.perform(post("/api/projects/1/tasks")
+                .header("X-Auth-Token", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"title\":\"Status-Only-Test\",\"status\":\"OFFEN\"}"))
+            .andExpect(status().isCreated())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+
+        long taskId = objectMapper.readTree(response).get("id").asLong();
+
+        mockMvc.perform(patch("/api/tasks/{taskId}/status", taskId)
+                .header("X-Auth-Token", token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"status\":\"IN_BEARBEITUNG\"}"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.status").value("IN_BEARBEITUNG"));
+    }
 }
