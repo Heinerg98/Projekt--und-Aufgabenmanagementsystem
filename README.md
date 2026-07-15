@@ -4,7 +4,7 @@ Einfache Full-Stack-Webanwendung für die IU-Fallstudie.
 
 ## Struktur
 
-- `/backend`: Spring Boot (REST API, JPA/Hibernate, H2)
+- `/backend`: Spring Boot (REST API, JPA/Hibernate, persistente H2-Dateidatenbank)
 - `/frontend`: React (Vite, React Router)
 
 ## Backend starten
@@ -16,7 +16,9 @@ mvn spring-boot:run
 
 API läuft auf `http://localhost:8080`.
 
-### Test-Logins
+Die Anwendungsdaten werden persistent in einer H2-Datei gespeichert. Beim ersten Start werden Demo-Daten automatisch angelegt. Wenn du den Backend-Server wie unten gezeigt aus dem Verzeichnis `backend` startest, liegen die erzeugten Datenbankdateien im Unterordner `data/` dieses Verzeichnisses, also unter `<project-root>/backend/data/`. Zum Zurücksetzen kannst du diese Dateien löschen.
+
+### Demo-Zugangsdaten
 
 - `admin / admin123` (ADMIN)
 - `leiter1 / leiter123` (PROJEKTLEITER)
@@ -31,6 +33,17 @@ npm run dev
 ```
 
 Frontend läuft auf `http://localhost:5173`.
+
+## Tests und Build
+
+```bash
+cd backend
+mvn test
+
+cd ../frontend
+npm install
+npm run build
+```
 
 ## Wichtige Endpunkte
 
