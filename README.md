@@ -2,8 +2,6 @@
 
 Full-Stack-Webanwendung zur zentralen Verwaltung von Projekten, Aufgaben und Mitarbeitenden – entwickelt im Rahmen einer IU-Fallstudie für einen mittelständischen IT-Dienstleister. Die Anwendung ersetzt die bisherige Verwaltung in Excel-Tabellen durch eine rollenbasierte Web-Lösung mit Authentifizierung, Autorisierung und persistenter Datenspeicherung.
 
-Die zugehörige Projektdokumentation (Anforderungen, Architektur, UML-Diagramm, Umsetzung, Tests, KI-Einsatz) ist als separates Dokument Teil der Abgabe.
-
 ## Technologiestack
 
 - **Frontend:** React (Vite, React Router)
