@@ -1,6 +1,14 @@
 # Projekt- und Aufgabenmanagementsystem
 
-Einfache Full-Stack-Webanwendung für die IU-Fallstudie.
+Full-Stack-Webanwendung zur zentralen Verwaltung von Projekten, Aufgaben und Mitarbeitenden – entwickelt im Rahmen einer IU-Fallstudie für einen mittelständischen IT-Dienstleister. Die Anwendung ersetzt die bisherige Verwaltung in Excel-Tabellen durch eine rollenbasierte Web-Lösung mit Authentifizierung, Autorisierung und persistenter Datenspeicherung.
+
+Die zugehörige Projektdokumentation (Anforderungen, Architektur, UML-Diagramm, Umsetzung, Tests, KI-Einsatz) ist als separates Dokument Teil der Abgabe.
+
+## Technologiestack
+
+- **Frontend:** React (Vite, React Router)
+- **Backend:** Spring Boot (REST API)
+- **Persistenz:** JPA/Hibernate mit H2-Dateidatenbank
 
 ## Struktur
 
@@ -16,7 +24,7 @@ mvn spring-boot:run
 
 API läuft auf `http://localhost:8080`.
 
-Die Anwendungsdaten werden persistent in einer H2-Datei gespeichert. Beim ersten Start werden Demo-Daten automatisch angelegt. Wenn du den Backend-Server wie unten gezeigt aus dem Verzeichnis `backend` startest, liegen die erzeugten Datenbankdateien im Unterordner `data/` dieses Verzeichnisses, also unter `<project-root>/backend/data/`. Zum Zurücksetzen kannst du diese Dateien löschen.
+Die Anwendungsdaten werden persistent in einer H2-Datei gespeichert (`data/pmsdb`). Beim ersten Start werden automatisch Demo-Daten angelegt.
 
 ### Demo-Zugangsdaten
 
@@ -44,6 +52,8 @@ cd ../frontend
 npm install
 npm run build
 ```
+
+Die Anwendung wird durch 32 automatisierte JUnit-Integrationstests im Backend (Authentifizierung, Projekt-, Aufgaben-, Mitglieder- und Benutzerverwaltung) sowie einen erfolgreichen Frontend-Build abgesichert. Details siehe [TESTING.md](./TESTING.md).
 
 ## Wichtige Endpunkte
 
